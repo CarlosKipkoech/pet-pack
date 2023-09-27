@@ -6,7 +6,7 @@ import com.example.jetpack1.data.UserDataUiEvents
 import com.example.jetpack1.data.UserInputScreenState
 
 class UserInputViewModel : ViewModel() {
-    private var uiState = mutableStateOf(UserInputScreenState())
+    var uiState = mutableStateOf(UserInputScreenState())
 
     // perform actions based on the event by user on the UI
 

@@ -1,12 +1,23 @@
 package com.example.jetpack1.screens
 
+import android.view.RoundedCorner
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -33,14 +44,10 @@ import com.example.jetpack1.R
 @Composable
 fun TopBar(s: String) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = s,
-            color = Color.Black,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Medium
+            text = s, color = Color.Black, fontSize = 24.sp, fontWeight = FontWeight.Medium
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -68,28 +75,24 @@ fun TextFieldComponent(
         mutableStateOf("")
     }
     val localFocusManager = LocalFocusManager.current
-    OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
+    OutlinedTextField(modifier = Modifier.fillMaxWidth(),
         value = currentValue,
         onValueChange = {
             onTextChanged(it)
-            currentValue =it
+            currentValue = it
         },
         placeholder = {
             Text(text = "Enter Your Name", fontSize = 18.sp)
         },
         textStyle = TextStyle.Default.copy(fontSize = 24.sp),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions { localFocusManager.clearFocus() }
-    )
+        keyboardActions = KeyboardActions { localFocusManager.clearFocus() })
 
 }
 
 @Composable
 fun TextComponent(
-    textValue: String,
-    textSize: TextUnit,
-    colorValue: Color = Color.Black
+    textValue: String, textSize: TextUnit, colorValue: Color = Color.Black
 ) {
 
     Text(
@@ -98,8 +101,48 @@ fun TextComponent(
         color = colorValue,
         fontWeight = FontWeight.Light
     )
+}
+
+@Composable
+fun AnimalCard(image: Int, selected: Boolean, animalSelected: (animalName: String) -> Unit) {
+    Card(
+        modifier = Modifier
+            .padding(24.dp)
+            .size(130.dp),
+        elevation = CardDefaults.cardElevation(4.dp)
+    ) {
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .border(
+                    width = 1.dp,
+                    color = if (selected) Color.Green else Color.Transparent,
+                    shape = RoundedCornerShape(8.dp)
+                )
+        ) {
+            Image(
+                modifier = Modifier
+                    .padding(15.dp)
+                    .wrapContentHeight()
+                    .wrapContentWidth()
+                    .clickable {
+                        var animalName = if (image == R.drawable.cat) "cat" else "Dog"
+                        animalSelected(animalName)
+                    },
+                painter = painterResource(id = image),
+                contentDescription = "Pet Preview"
+            )
+        }
 
 
+    }
+}
+
+@Preview(showBackground = false)
+@Composable
+fun AnimalCardPreview() {
+    AnimalCard(R.drawable.cat, false, { "dog" })
 }
 
 @Preview(showBackground = true)
@@ -107,6 +150,7 @@ fun TextComponent(
 fun TextComponentPreview() {
     TextComponent("carlos", 24.sp)
 }
+
 
 @Preview(showBackground = true)
 @Composable
