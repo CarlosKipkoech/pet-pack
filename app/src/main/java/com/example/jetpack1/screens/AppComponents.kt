@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.jetpack1.R
@@ -37,6 +38,25 @@ fun TopBar(s: String) {
 
     }
 
+}
+
+@Composable
+fun TextComponent(textValue: String,
+                  textSize: TextUnit,
+                  colorValue: Color = Color.Black){
+
+    Text(text = textValue,
+        fontSize = textSize,
+        color = colorValue,
+        fontWeight = FontWeight.Light
+    )
+
+
+}
+@Preview(showBackground = true)
+@Composable
+fun TextComponentPreview(){
+    TextComponent("carlos",24.sp)
 }
 
 @Preview(showBackground = true)
